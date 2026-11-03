@@ -151,7 +151,3 @@ placeready/
 * Automated GitHub portfolio scanners to match project structures
 
 * Corporate vacancy application recommendation pipeline
-
-## 📄 License
-
-This project is licensed under the MIT License.
