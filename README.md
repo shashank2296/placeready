@@ -1,153 +1,95 @@
 # PlaceReady (Pro) 🚀
 
-A production-grade, full-stack AI placement preparation portal built with **FastAPI** and **SQLite**. Features JWT authentication, secure password hashing, dynamic resume analysis with ATS scoring, and automated AI interview generation.
+A production-grade, full-stack AI-powered placement preparation platform designed to help students streamline and enhance their campus placement journey through intelligent resume analysis, personalized interview preparation, and structured learning roadmaps.
 
 ## ✨ Features
 
-* **Authentication & Security**
+- **Modern User Experience:** An interactive and user-friendly web interface designed to provide a seamless placement preparation experience.
+- **Secure Authentication:** JWT-based authentication with BCrypt password hashing to ensure secure user registration, login, and protected access.
+- **AI-Powered Resume Analyzer:**
+  - Supports multiple resume formats, including PDF and DOCX.
+  - Automatically evaluates resumes using ATS scoring techniques.
+  - Extracts relevant keywords, technical skills, and qualifications.
+- **AI Mock Interview System:**
+  - Dynamically generates placement interview questions based on user profiles and preparation needs.
+  - Provides AI-driven answer evaluation, grading, and performance scoring.
+  - Maintains historical interview records to track preparation progress.
+- **Personalized Learning Roadmaps:** Generates structured placement preparation paths with organized topics and progress tracking to help students prepare systematically.
 
-  * JWT-based authentication using `PyJWT`
+## 🛠️ Technology Stack (Python + AI)
 
-  * BCrypt password hashing for secure credentials
+- **Backend:** Python 3.11+, FastAPI
+- **Database:** SQLite, Relational Database Management
+- **AI Integration:** Anthropic Claude API for intelligent resume analysis, interview question generation, and response evaluation.
+- **Authentication & Security:** PyJWT, BCrypt password hashing, JWT-based authorization
+- **Server:** Uvicorn (ASGI Server)
+- **Frontend:** HTML, CSS, JavaScript
 
-  * Protected API endpoints via header token verification
+## 🚀 Local Setup Instructions
 
-* **Resume Analyzer**
+1. **Create and navigate to the project directory:**
 
-  * Multi-format resume parsing (`PDF`, `DOCX`)
+   ```bash
+   cd placeready
+   ```
 
-  * Automated ATS score calculation
+2. **Create and activate a virtual environment:**
 
-  * Keyword and technical skills extraction
+   ```bash
+   python -m venv venv
+   ```
 
-* **AI Mock Interviews**
+   On Windows:
+   ```bash
+   venv\Scripts\activate
+   ```
 
-  * Dynamic, tailored placement question generation
+3. **Install dependencies:**
 
-  * AI-driven response grading and scoring
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-  * Historical performance and interview tracking
+4. **Environment Variables:** Create a `.env` file in the root directory and add your configurations:
 
-* **Interactive Roadmaps**
+   ```env
+   ANTHROPIC_API_KEY=your_actual_anthropic_api_key
+   JWT_SECRET=generate_a_long_random_secure_string
+   CLAUDE_MODEL=claude-sonnet-5-5
+   ```
 
-  * Personal placement preparation paths
+5. **Run the Application:**
 
-  * Structured progress tracking
+   ```bash
+   uvicorn main:app --reload
+   ```
 
-## 🛠 Tech Stack
+   *The development server will start at `http://localhost:8000`.*
 
-* **Backend Technology**
+## 🛡️ Authentication & Security
 
-  * **Python 3.11+**: Primary programming language
-
-  * **FastAPI**: Modern, high-performance web framework
-
-  * **SQLite**: Lightweight relational database system
-
-  * **Anthropic Claude API**: LLM core for resume analysis and question generation
-
-  * **PyJWT**: Token-based security management
-
-  * **BCrypt**: Safe password serialization
-
-  * **Uvicorn**: ASGI web server implementation
-
-## 📸 Screenshots
-
-* **Auth Pages**: Sign In / Sign Up Interface
-
-* **Core Dashboard**: Resume Upload & ATS Score Board, AI Interview Session Panel, Custom Study Roadmap
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-* Python 3.11+
-
-* Anthropic API Key
-
-### Environment Setup
-
-Create a `.env` file in the root directory:
-
-```
-ANTHROPIC_API_KEY=your_actual_anthropic_api_key
-JWT_SECRET=generate_a_long_random_secure_string
-CLAUDE_MODEL=claude-sonnet-5-5
-
-```
-
-### Installation & Launch
-
-Run the following commands in your terminal:
-
-```
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-
-# Install project dependencies
-pip install -r requirements.txt
-
-# Run development server
-uvicorn main:app --reload
-
-```
-
-The platform will be live at: `http://localhost:8000`
-
-## 📁 Project Structure
-
-```
-placeready/
-├── static/              # Frontend web interface (HTML, CSS, JS)
-├── routes/              # FastAPI specialized routers
-│   ├── auth.py          # Login, signup, and session controls
-│   ├── resume.py        # Upload processing & ATS scoring
-│   ├── interview.py     # Question generation & grading
-│   └── roadmap.py       # Customized study maps
-├── config.py            # Environment variables loader
-├── database.py          # SQLite schema initialization & queries
-├── main.py              # FastAPI app lifecycle definition
-├── requirements.txt     # Back-end dependencies
-└── .env                 # Local credentials configuration
-
-```
-
-## 🌐 Environment Variables
-
-| Variable | Description | Default | 
-| ----- | ----- | ----- | 
-| `ANTHROPIC_API_KEY` | Key for Claude LLM integration | None (Required) | 
-| `JWT_SECRET` | Signing token secret for sessions | `dev-secret-change-me` | 
-| `CLAUDE_MODEL` | Anthropic model identifier | `claude-sonnet-5-5` | 
+PlaceReady (Pro) implements JWT-based authentication to secure user accounts and API endpoints. Passwords are protected using BCrypt hashing, while token verification ensures that only authenticated users can access protected resources. Environment variables are used to manage sensitive API credentials and security configurations.
 
 ## 📡 API Endpoints
 
-* **Authentication**
+- **Authentication**
+  - `POST /auth/register` – Register a new user.
+  - `POST /auth/login` – Authenticate users and generate access tokens.
 
-  * `POST /auth/register` - Create user profile
+- **Resume Operations**
+  - `POST /resume/upload` – Upload and analyze resumes with ATS scoring.
+  - `GET /resume/history` – Retrieve previous resume analysis records.
 
-  * `POST /auth/login` - Authenticate user & receive token
+- **Interview Operations**
+  - `POST /interview/generate` – Generate personalized mock interview questions.
+  - `POST /interview/submit` – Submit answers for AI-based evaluation and scoring.
 
-* **Resume Operations**
-
-  * `POST /resume/upload` - Parse resume & run ATS audit
-
-  * `GET /resume/history` - Retrieve previously uploaded metrics
-
-* **Interview Operations**
-
-  * `POST /interview/generate` - Produce custom interview questions
-
-  * `POST /interview/submit` - Grade and submit answer responses
+- **Roadmap Operations**
+  - `/roadmap` – Access personalized placement preparation roadmaps.
 
 ## 🔮 Future Enhancements
 
-* Audio voice-to-text integration for real-time oral interview prep
-
-* Multi-user structural peer mock interview lobbies
-
-* Automated GitHub portfolio scanners to match project structures
-
-* Corporate vacancy application recommendation pipeline
+- Real-time voice-based mock interviews with speech-to-text integration.
+- Interactive peer-to-peer mock interview sessions.
+- Automated GitHub portfolio analysis to evaluate projects and technical skills.
+- AI-powered job and internship recommendations based on student profiles and skill sets.
